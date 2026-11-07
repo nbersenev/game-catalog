@@ -38,6 +38,7 @@ export type GameMinAggregateOutputType = {
   id: string | null
   name: string | null
   steam_app_id: number | null
+  image: string | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -46,6 +47,7 @@ export type GameMaxAggregateOutputType = {
   id: string | null
   name: string | null
   steam_app_id: number | null
+  image: string | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -54,6 +56,7 @@ export type GameCountAggregateOutputType = {
   id: number
   name: number
   steam_app_id: number
+  image: number
   created_at: number
   updated_at: number
   _all: number
@@ -72,6 +75,7 @@ export type GameMinAggregateInputType = {
   id?: true
   name?: true
   steam_app_id?: true
+  image?: true
   created_at?: true
   updated_at?: true
 }
@@ -80,6 +84,7 @@ export type GameMaxAggregateInputType = {
   id?: true
   name?: true
   steam_app_id?: true
+  image?: true
   created_at?: true
   updated_at?: true
 }
@@ -88,6 +93,7 @@ export type GameCountAggregateInputType = {
   id?: true
   name?: true
   steam_app_id?: true
+  image?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -183,6 +189,7 @@ export type GameGroupByOutputType = {
   id: string
   name: string
   steam_app_id: number | null
+  image: string | null
   created_at: Date
   updated_at: Date | null
   _count: GameCountAggregateOutputType | null
@@ -214,6 +221,7 @@ export type GameWhereInput = {
   id?: Prisma.UuidFilter<"Game"> | string
   name?: Prisma.StringFilter<"Game"> | string
   steam_app_id?: Prisma.IntNullableFilter<"Game"> | number | null
+  image?: Prisma.StringNullableFilter<"Game"> | string | null
   created_at?: Prisma.DateTimeFilter<"Game"> | Date | string
   updated_at?: Prisma.DateTimeNullableFilter<"Game"> | Date | string | null
 }
@@ -222,25 +230,28 @@ export type GameOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   steam_app_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
 }
 
 export type GameWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  steam_app_id?: number
   AND?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
   OR?: Prisma.GameWhereInput[]
   NOT?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
   name?: Prisma.StringFilter<"Game"> | string
-  steam_app_id?: Prisma.IntNullableFilter<"Game"> | number | null
+  image?: Prisma.StringNullableFilter<"Game"> | string | null
   created_at?: Prisma.DateTimeFilter<"Game"> | Date | string
   updated_at?: Prisma.DateTimeNullableFilter<"Game"> | Date | string | null
-}, "id">
+}, "id" | "steam_app_id">
 
 export type GameOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   steam_app_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.GameCountOrderByAggregateInput
@@ -257,6 +268,7 @@ export type GameScalarWhereWithAggregatesInput = {
   id?: Prisma.UuidWithAggregatesFilter<"Game"> | string
   name?: Prisma.StringWithAggregatesFilter<"Game"> | string
   steam_app_id?: Prisma.IntNullableWithAggregatesFilter<"Game"> | number | null
+  image?: Prisma.StringNullableWithAggregatesFilter<"Game"> | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Game"> | Date | string
   updated_at?: Prisma.DateTimeNullableWithAggregatesFilter<"Game"> | Date | string | null
 }
@@ -265,6 +277,7 @@ export type GameCreateInput = {
   id?: string
   name: string
   steam_app_id?: number | null
+  image?: string | null
   created_at?: Date | string
   updated_at?: Date | string | null
 }
@@ -273,6 +286,7 @@ export type GameUncheckedCreateInput = {
   id?: string
   name: string
   steam_app_id?: number | null
+  image?: string | null
   created_at?: Date | string
   updated_at?: Date | string | null
 }
@@ -281,6 +295,7 @@ export type GameUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   steam_app_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -289,6 +304,7 @@ export type GameUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   steam_app_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -297,6 +313,7 @@ export type GameCreateManyInput = {
   id?: string
   name: string
   steam_app_id?: number | null
+  image?: string | null
   created_at?: Date | string
   updated_at?: Date | string | null
 }
@@ -305,6 +322,7 @@ export type GameUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   steam_app_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -313,6 +331,7 @@ export type GameUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   steam_app_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -321,6 +340,7 @@ export type GameCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   steam_app_id?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -333,6 +353,7 @@ export type GameMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   steam_app_id?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -341,6 +362,7 @@ export type GameMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   steam_app_id?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -361,6 +383,10 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
@@ -375,6 +401,7 @@ export type GameSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   name?: boolean
   steam_app_id?: boolean
+  image?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["game"]>
@@ -383,6 +410,7 @@ export type GameSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   name?: boolean
   steam_app_id?: boolean
+  image?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["game"]>
@@ -391,6 +419,7 @@ export type GameSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   name?: boolean
   steam_app_id?: boolean
+  image?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["game"]>
@@ -399,11 +428,12 @@ export type GameSelectScalar = {
   id?: boolean
   name?: boolean
   steam_app_id?: boolean
+  image?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "steam_app_id" | "created_at" | "updated_at", ExtArgs["result"]["game"]>
+export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "steam_app_id" | "image" | "created_at" | "updated_at", ExtArgs["result"]["game"]>
 
 export type $GamePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Game"
@@ -412,6 +442,7 @@ export type $GamePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: string
     name: string
     steam_app_id: number | null
+    image: string | null
     created_at: Date
     updated_at: Date | null
   }, ExtArgs["result"]["game"]>
@@ -840,6 +871,7 @@ export interface GameFieldRefs {
   readonly id: Prisma.FieldRef<"Game", 'String'>
   readonly name: Prisma.FieldRef<"Game", 'String'>
   readonly steam_app_id: Prisma.FieldRef<"Game", 'Int'>
+  readonly image: Prisma.FieldRef<"Game", 'String'>
   readonly created_at: Prisma.FieldRef<"Game", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Game", 'DateTime'>
 }

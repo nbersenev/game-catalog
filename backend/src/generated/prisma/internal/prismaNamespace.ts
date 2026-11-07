@@ -534,6 +534,7 @@ export const GameScalarFieldEnum = {
   id: 'id',
   name: 'name',
   steam_app_id: 'steam_app_id',
+  image: 'image',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const

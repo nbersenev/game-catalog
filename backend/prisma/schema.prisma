@@ -15,10 +15,10 @@ datasource db {
 model Game {
   id           String    @id @default(uuid()) @db.Uuid
   name         String
-  steam_app_id Int?
+  steam_app_id Int?      @unique
+  image        String?
   created_at   DateTime  @default(now())
   updated_at   DateTime?
 
-  @@index([steam_app_id])
   @@map("games")
 }

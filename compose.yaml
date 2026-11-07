@@ -23,10 +23,16 @@ services:
       - backend_node_modules:/app/node_modules
     environment:
       NODE_ENV: development
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5433/${POSTGRES_DB}?schema=public
       CHOKIDAR_USEPOLLING: "true"
       WATCHPACK_POLLING: "true"
       TSC_WATCHFILE: "DynamicPriorityPolling"
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5433/${POSTGRES_DB}?schema=public
+      MINIO_ENDPOINT: ${MINIO_ENDPOINT}
+      MINIO_PORT: ${MINIO_PORT}
+      MINIO_USE_SSL: ${MINIO_USE_SSL}
+      MINIO_BUCKET: ${MINIO_BUCKET}
+      MINIO_APP_ACCESS_KEY: ${MINIO_APP_ACCESS_KEY}
+      MINIO_APP_SECRET_KEY: ${MINIO_APP_SECRET_KEY}
     depends_on:
       postgres:
         condition: service_healthy
@@ -52,17 +58,40 @@ services:
 
   silo:
     image: pgsty/silo:RELEASE.2026-10-26T00-00-00Z
-    container_name: minio
+    container_name: silo
     ports:
       - "9000:9000"
       - "9001:9001"
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_APP_ACCESS_KEY: ${MINIO_APP_ACCESS_KEY}
+      MINIO_APP_SECRET_KEY: ${MINIO_APP_SECRET_KEY}
     volumes:
       - silo_data:/data
     command: server /data --console-address ":9001"
     restart: unless-stopped
+
+  silo-init:
+    image: pgsty/mc:latest
+    depends_on:
+      - silo
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_BUCKET: ${MINIO_BUCKET}
+      MINIO_APP_ACCESS_KEY: ${MINIO_APP_ACCESS_KEY}
+      MINIO_APP_SECRET_KEY: ${MINIO_APP_SECRET_KEY}
+    entrypoint: >
+      /bin/sh -c "
+      until mc alias set local http://silo:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD}; do
+        echo 'Waiting for Silo...'; sleep 1;
+      done;
+      mc mb --ignore-existing local/$${MINIO_BUCKET};
+      mc anonymous set download local/$${MINIO_BUCKET};
+      mc admin accesskey create local --access-key $${MINIO_APP_ACCESS_KEY} --secret-key $${MINIO_APP_SECRET_KEY};
+      echo 'Bucket and access key created';
+      "
 
 volumes:
   postgres_data:
