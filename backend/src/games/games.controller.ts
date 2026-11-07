@@ -21,8 +21,7 @@ export class GamesController {
   }
 
   @Get()
-  async getList() {
-    const items = await this.games.getList();
-    return { items };
+  getList() {
+    return this.games.getList();
   }
 }

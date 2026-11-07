@@ -105,7 +105,11 @@ export class GamesService {
     });
   }
 
-  getList() {
-    return this.prisma.game.findMany();
+  async getList() {
+    const [items, count] = await this.prisma.$transaction([
+      this.prisma.game.findMany(),
+      this.prisma.game.count(),
+    ]);
+    return { items, count };
   }
 }
