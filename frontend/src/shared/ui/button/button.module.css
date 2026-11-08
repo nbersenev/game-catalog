@@ -1,0 +1,15 @@
+.button {
+  background: var(--color-cyan-600);
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 20px;
+  padding: 0 16px;
+  height: 48px;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, .3);
+
+  &:hover {
+    background: var(--color-cyan-500);
+  }
+}

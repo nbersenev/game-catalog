@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState, type MouseEvent } from "react";
+import { memo, useCallback, useRef, useState, type MouseEvent } from "react";
 import type { Game } from "../model";
 import styles from "./game-card.module.css";
 import { WindowsIcon } from "@shared/ui";
@@ -7,7 +7,7 @@ interface GameCardProps {
   data: Game;
 }
 
-export const GameCard = ({ data }: GameCardProps) => {
+export const GameCard = memo(({ data }: GameCardProps) => {
   const { image } = data;
   const imageUrl = "http://localhost:9000/default" + image;
   const ref = useRef<HTMLDivElement>(null);
@@ -68,4 +68,4 @@ export const GameCard = ({ data }: GameCardProps) => {
       </div>
     </div>
   );
-};
+});
