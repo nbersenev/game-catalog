@@ -1,27 +1,28 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { GamesService } from './games.service';
-import { SearchGameDto } from './dto/search-game.dto';
-import { CreateGameDto } from './dto/create-game.dto';
+import { SearchFromSteamDto } from './dto/search-from-steam.dto';
+import { CreateFromSteamDto } from './dto/create-from-steam.dto';
+import { GetListDto } from './dto/get-list.dto';
 
 @Controller('games')
 export class GamesController {
   constructor(private games: GamesService) {}
 
-  @Get('search')
-  async search(@Query() dto: SearchGameDto) {
-    const data = await this.games.search(dto);
+  @Get('steam/search')
+  async searchFromSteam(@Query() dto: SearchFromSteamDto) {
+    const data = await this.games.searchFromSteam(dto);
     return data;
   }
 
   @Post('steam')
-  async create(@Body() dto: CreateGameDto) {
-    console.log(dto);
+  async createFromSteam(@Body() dto: CreateFromSteamDto) {
     const data = await this.games.createFromSteam(dto);
     return data;
   }
 
   @Get()
-  getList() {
-    return this.games.getList();
+  getList(@Query() params: GetListDto) {
+    console.log(params);
+    return this.games.getList(params);
   }
 }

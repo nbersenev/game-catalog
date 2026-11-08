@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.10.1",
   "engineVersion": "d1b3f377ca835d73fd50954a5e22128b9ebdd6b8",
   "activeProvider": "postgresql",
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Get a free hosted Postgres database in seconds: `npx create-db`\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Game {\n  id           String    @id @default(uuid()) @db.Uuid\n  name         String\n  steam_app_id Int?      @unique\n  image        String?\n  created_at   DateTime  @default(now())\n  updated_at   DateTime?\n\n  @@map(\"games\")\n}\n",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Get a free hosted Postgres database in seconds: `npx create-db`\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Game {\n  id           String    @id @default(uuid()) @db.Uuid\n  name         String\n  steam_app_id Int?      @unique\n  image        String?\n  created_at   DateTime  @default(now())\n  updated_at   DateTime?\n\n  @@index([name])\n  @@map(\"games\")\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},

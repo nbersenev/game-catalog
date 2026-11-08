@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class SearchGameDto {
+export class SearchFromSteamDto {
   @IsString()
   @IsNotEmpty()
   query!: string;

@@ -1,11 +1,13 @@
 import { useCallback, useRef, type ChangeEvent, type ReactNode } from "react";
 import styles from "./input.module.css";
+import { Spinner } from "../spinner";
 
 interface InputProps {
   leftAdornment?: ReactNode;
   onChange(value: string): void;
   rightAdornment?: ReactNode;
   placeholder?: string;
+  isLoading?: boolean;
   value: string;
 }
 
@@ -14,6 +16,7 @@ export const Input = ({
   placeholder,
   leftAdornment,
   rightAdornment,
+  isLoading,
   onChange,
 }: InputProps) => {
   const ref = useRef<HTMLInputElement>(null);
@@ -40,6 +43,7 @@ export const Input = ({
         placeholder={placeholder}
       />
       {rightAdornment}
+      {isLoading && <Spinner size={24} />}
     </div>
   );
 };

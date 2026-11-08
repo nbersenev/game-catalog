@@ -20,5 +20,6 @@ model Game {
   created_at   DateTime  @default(now())
   updated_at   DateTime?
 
+  @@index([name])
   @@map("games")
 }

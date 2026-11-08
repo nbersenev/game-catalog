@@ -6,10 +6,10 @@ import {
 import { PrismaService } from '@modules/prisma/prisma.service';
 import { MinioService } from '@modules/minio/minio.service';
 import { ConfigService } from '@nestjs/config';
-import { v4 as uuid } from 'uuid';
 import { SteamClient } from '../steam/steam.client';
-import { SearchGameDto } from './dto/search-game.dto';
-import { CreateGameDto } from './dto/create-game.dto';
+import { SearchFromSteamDto } from './dto/search-from-steam.dto';
+import { CreateFromSteamDto } from './dto/create-from-steam.dto';
+import { GetListDto } from './dto/get-list.dto';
 
 @Injectable()
 export class GamesService {
@@ -20,7 +20,7 @@ export class GamesService {
     private config: ConfigService,
   ) {}
 
-  async search(dto: SearchGameDto) {
+  async searchFromSteam(dto: SearchFromSteamDto) {
     const { query } = dto;
     const data = await this.steam.searchApp(query);
 
@@ -29,40 +29,7 @@ export class GamesService {
     };
   }
 
-  private async loadCoverImageFromSteam({
-    gameId,
-    steamAppId,
-  }: {
-    gameId: string;
-    steamAppId: number;
-  }): Promise<string> {
-    const previewUrl = `https://cdn.akamai.steamstatic.com/steam/apps/${steamAppId}/library_600x900.jpg`;
-    const response = await fetch(previewUrl);
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch image: ${response.statusText}`);
-    }
-
-    const contentType =
-      response.headers.get('content-type') || 'application/octet-stream';
-    const arrayBuffer = await response.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const objectName = `/games/${gameId}/cover.jpg`;
-
-    await this.minio.putObject(
-      this.config.get('MINIO_BUCKET', 'default'),
-      objectName,
-      buffer,
-      buffer.length,
-      {
-        'Content-Type': contentType,
-      },
-    );
-
-    return objectName;
-  }
-
-  async createFromSteam(dto: CreateGameDto) {
+  async createFromSteam(dto: CreateFromSteamDto) {
     const { steamAppId } = dto;
 
     const existingGame = await this.prisma.game.findFirst({
@@ -105,11 +72,52 @@ export class GamesService {
     });
   }
 
-  async getList() {
+  async getList(params: GetListDto) {
+    const where = params.name
+      ? {
+          name: {
+            contains: params.name,
+            mode: 'insensitive' as const,
+          },
+        }
+      : undefined;
     const [items, count] = await this.prisma.$transaction([
-      this.prisma.game.findMany(),
-      this.prisma.game.count(),
+      this.prisma.game.findMany({ where }),
+      this.prisma.game.count({ where }),
     ]);
     return { items, count };
+  }
+
+  private async loadCoverImageFromSteam({
+    gameId,
+    steamAppId,
+  }: {
+    gameId: string;
+    steamAppId: number;
+  }): Promise<string> {
+    const previewUrl = `https://cdn.akamai.steamstatic.com/steam/apps/${steamAppId}/library_600x900.jpg`;
+    const response = await fetch(previewUrl);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image: ${response.statusText}`);
+    }
+
+    const contentType =
+      response.headers.get('content-type') || 'application/octet-stream';
+    const arrayBuffer = await response.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const objectName = `/games/${gameId}/cover.jpg`;
+
+    await this.minio.putObject(
+      this.config.get('MINIO_BUCKET', 'default'),
+      objectName,
+      buffer,
+      buffer.length,
+      {
+        'Content-Type': contentType,
+      },
+    );
+
+    return objectName;
   }
 }

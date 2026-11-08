@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber } from 'class-validator';
 
-export class CreateGameDto {
+export class CreateFromSteamDto {
   @IsNumber()
   @IsNotEmpty()
   steamAppId!: number;
