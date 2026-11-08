@@ -5,7 +5,7 @@ export const MainPage = () => {
   const games = data?.items || [];
 
   return (
-    <div className="grid grid-cols-8 gap-8 p-8">
+    <div className="grid grid-cols-10 gap-8 p-8">
       {games.map((game) => (
         <GameCard key={game.id} data={game} />
       ))}

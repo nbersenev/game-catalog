@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState, type MouseEvent } from "react";
 import type { Game } from "../model";
 import styles from "./game-card.module.css";
+import { WindowsIcon } from "@shared/ui";
 
 interface GameCardProps {
   data: Game;
@@ -54,6 +55,9 @@ export const GameCard = ({ data }: GameCardProps) => {
         }}
       >
         <div className={styles.gameCard__body}>
+          <div className="flex p-2">
+            <WindowsIcon height="24px" width="24px" />
+          </div>
           <img
             src={imageUrl}
             alt=""
