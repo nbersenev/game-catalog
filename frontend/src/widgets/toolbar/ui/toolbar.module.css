@@ -3,8 +3,8 @@
   top: 0;
   left: 0;
   right: 0;
-  background: var(--color-neutral-950);
-  box-shadow: 0 0 16px var(--color-neutral-950);
+  background: #182535;
+  box-shadow: 0 0 16px rgb(15, 15, 15);
   padding: 24px 32px;
   display: flex;
   align-items: center;

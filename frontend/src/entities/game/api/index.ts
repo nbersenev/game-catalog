@@ -1,2 +1,2 @@
-export { gameApi } from "./game-api";
-export { useGetGamesList } from "./queries";
+export { gamesApi } from "./games-api";
+export { useGetGamesList, useSearchSteamGames } from "./queries";

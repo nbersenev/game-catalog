@@ -1,1 +1,1 @@
-export type { Game } from "./interfaces";
+export type { Game, SteamGame } from "./interfaces";

@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 * {
   box-sizing: border-box;
@@ -12,7 +12,7 @@ body {
 }
 
 body {
-  background: var(--color-neutral-950);
+  background: #171d25;
   color: white;
   font-family: sans-serif;
   font-size: 16px;

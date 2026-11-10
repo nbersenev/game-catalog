@@ -4,6 +4,7 @@ import { useBodyScrollLock } from "@shared/hooks";
 import cn from "classnames";
 
 import styles from "./modal.module.css";
+import { CloseIcon } from "../icons";
 
 interface ModalProps {
   onClose(): void;
@@ -23,6 +24,7 @@ export const Modal = ({
   return (
     <div className={cn(styles.modalContainer, { [styles.visible]: open })}>
       <div className={styles.modal} style={{ width }}>
+        <div className={styles.closeButton} onClick={onClose}><CloseIcon height="24px" width="24px" /></div>
         {children}
       </div>
     </div>

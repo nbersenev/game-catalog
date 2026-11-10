@@ -1,6 +1,5 @@
 .inputContainer {
-  background: var(--color-neutral-800);
-  border: 1px solid var(--color-neutral-600);
+  background: white;
   border-radius: 8px;
   color: var(--color-neutral-400);
   cursor: text;
@@ -11,9 +10,12 @@
   height: 48px;
 
   &:focus-within {
-    border-color: var(--color-neutral-500);
-    color: white;
+    color: black;
   }
+}
+
+.active {
+  color: black;
 }
 
 .input {
@@ -21,7 +23,7 @@
   width: 100%;
 
   &:focus-visible {
-    color: white;
+    color: black;
     outline: none;
   }
 

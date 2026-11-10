@@ -1,8 +1,8 @@
+import { useCallback, useEffect, useRef, useState } from "react";
 import { GameCard, useGetGamesList } from "@entities/game";
 import { Toolbar } from "@widgets/toolbar";
-import { useCallback, useEffect, useRef, useState } from "react";
+
 import { EmptyState } from "./ui";
-import { Modal } from "@shared/ui";
 
 export const MainPage = () => {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -34,11 +34,7 @@ export const MainPage = () => {
 
   return (
     <>
-      <Toolbar
-        count={count}
-        isLoading={isPlaceholderData}
-        onChangeQuery={handleChangeQuery}
-      />
+      <Toolbar count={count} isLoading={isPlaceholderData} onChangeQuery={handleChangeQuery} />
       <div className="pt-28 px-8 pb-8 min-h-screen flex flex-col">
         {!!games.length ? (
           <div className="grid grid-cols-10 gap-8">

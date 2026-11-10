@@ -1,4 +1,6 @@
 import { useCallback, useRef, type ChangeEvent, type ReactNode } from "react";
+import cn from "classnames";
+
 import styles from "./input.module.css";
 import { Spinner } from "../spinner";
 
@@ -33,7 +35,7 @@ export const Input = ({
   );
 
   return (
-    <div className={styles.inputContainer} onClick={handleClick}>
+    <div className={cn(styles.inputContainer, { [styles.active]: !!value })} onClick={handleClick}>
       {leftAdornment}
       <input
         ref={ref}
