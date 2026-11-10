@@ -3,7 +3,8 @@
   top: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(180deg, #06080a, rgba(6, 8, 10, 0));
+  background: var(--color-neutral-950);
+  box-shadow: 0 0 16px var(--color-neutral-950);
   padding: 24px 32px;
   display: flex;
   align-items: center;

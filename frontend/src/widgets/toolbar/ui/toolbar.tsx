@@ -1,7 +1,8 @@
 import { memo, useCallback, useState } from "react";
 import styles from "./toolbar.module.css";
-import { Button, Input, PlusIcon, SearchIcon } from "@shared/ui";
+import { GamepadIcon, Input, SearchIcon } from "@shared/ui";
 import { pluralize } from "@shared/lib/pluralize";
+import { AddGameButton } from "@features/add-game";
 
 interface ToolbarProps {
   count: number;
@@ -24,11 +25,7 @@ export const Toolbar = memo(
     return (
       <div className={styles.toolbar}>
         <div className="flex items-center gap-4 w-full">
-          <Button
-            text="Добавить"
-            leftAdornment={<PlusIcon height="24px" width="24px" />}
-            onClick={() => console.log("test")}
-          />
+          <AddGameButton />
           <div className="w-1/6">
             <Input
               value={inputValue}
@@ -39,8 +36,11 @@ export const Toolbar = memo(
             />
           </div>
         </div>
-        <div className="flex-none text-xl text-medium">
-          {count} {pluralize(count, "игра", "игры", "игр")}
+        <div className="flex flex-none items-center gap-4">
+          <GamepadIcon height="24px" width="24px" />
+          <div className="text-xl text-medium">
+            {count} {pluralize(count, "игра", "игры", "игр")}
+          </div>
         </div>
       </div>
     );
