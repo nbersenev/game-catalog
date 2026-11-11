@@ -1,8 +1,8 @@
-import { memo, useCallback, useEffect, useRef, useState } from "react";
-import { Button, Input, Modal, SearchIcon } from "@shared/ui";
-import { useSearchSteamGames } from "@entities/game";
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { Button, Input, Modal, SearchIcon } from '@shared/ui';
+import { useSearchSteamGames } from '@entities/game';
 
-import styles from "./add-game-modal.module.css";
+import styles from './add-game-modal.module.css';
 
 interface AddGameModalProps {
   open: boolean;
@@ -11,7 +11,7 @@ interface AddGameModalProps {
 
 export const AddGameModal = memo((props: AddGameModalProps) => {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const { mutate, data, reset, isPending } = useSearchSteamGames();
 
   const handleChangeQuery = useCallback(
@@ -31,7 +31,7 @@ export const AddGameModal = memo((props: AddGameModalProps) => {
   useEffect(() => {
     if (!props.open) {
       setTimeout(() => {
-        setQuery("");
+        setQuery('');
         reset();
       }, 300);
     }
