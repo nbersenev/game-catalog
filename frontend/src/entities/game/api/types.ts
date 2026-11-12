@@ -12,5 +12,5 @@ export interface CreateGameRequest {
 }
 
 export interface CreateGameFromSteamRequest {
-  steamAppId: string;
+  steamAppId: number;
 }

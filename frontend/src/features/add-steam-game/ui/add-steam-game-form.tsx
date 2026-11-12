@@ -40,7 +40,7 @@ export const AddSteamGameForm = memo(({ resetRef, onDone }: AddSteamGameProps) =
     (id: number) => async () => {
       try {
         setLoading(prevState => ({ ...prevState, [id]: true }));
-        await mutateAsync({ steamAppId: String(id) });
+        await mutateAsync({ steamAppId: id });
         onDone?.();
       } finally {
         setLoading(prevState => ({ ...prevState, [id]: false }));
