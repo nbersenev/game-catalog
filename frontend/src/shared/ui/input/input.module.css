@@ -18,8 +18,12 @@
   color: black;
 }
 
+.error {
+  background: var(--color-red-200);
+}
+
 .input {
-  font-size: 20px;
+  font-size: 18px;
   width: 100%;
 
   &:focus-visible {

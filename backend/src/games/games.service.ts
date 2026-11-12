@@ -10,6 +10,8 @@ import { SteamClient } from '../steam/steam.client';
 import { SearchFromSteamDto } from './dto/search-from-steam.dto';
 import { CreateFromSteamDto } from './dto/create-from-steam.dto';
 import { GetListDto } from './dto/get-list.dto';
+import { CreateDto } from './dto/create.dto';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class GamesService {
@@ -50,24 +52,46 @@ export class GamesService {
       );
     }
 
-    const game = await this.prisma.game.create({
+    const gameId = uuid();
+
+    const imagePath = await this.loadGameImage({
+      gameId,
+      imageUrl: `https://cdn.akamai.steamstatic.com/steam/apps/${steamAppId}/library_600x900.jpg`,
+    });
+
+    return this.prisma.game.create({
       data: {
+        id: gameId,
         name: data.name,
+        image: imagePath,
         steam_app_id: data.steam_appid,
       },
     });
+  }
 
-    const imagePath = await this.loadCoverImageFromSteam({
-      gameId: game.id,
-      steamAppId: data.steam_appid,
+  async create(dto: CreateDto) {
+    const { image, name } = dto;
+
+    const existingGame = await this.prisma.game.findFirst({
+      where: { name },
     });
 
-    await this.prisma.game.update({
+    if (existingGame) {
+      throw new ConflictException(`Игра с названием ${name} уже существует`);
+    }
+
+    const gameId = uuid();
+
+    const imagePath = await this.loadGameImage({
+      gameId,
+      imageUrl: image,
+    });
+
+    return this.prisma.game.create({
       data: {
+        id: gameId,
+        name,
         image: imagePath,
-      },
-      where: {
-        id: game.id,
       },
     });
   }
@@ -88,15 +112,14 @@ export class GamesService {
     return { items, count };
   }
 
-  private async loadCoverImageFromSteam({
+  private async loadGameImage({
     gameId,
-    steamAppId,
+    imageUrl,
   }: {
     gameId: string;
-    steamAppId: number;
+    imageUrl: string;
   }): Promise<string> {
-    const previewUrl = `https://cdn.akamai.steamstatic.com/steam/apps/${steamAppId}/library_600x900.jpg`;
-    const response = await fetch(previewUrl);
+    const response = await fetch(imageUrl);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch image: ${response.statusText}`);

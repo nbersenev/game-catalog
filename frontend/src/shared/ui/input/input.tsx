@@ -1,25 +1,27 @@
-import { useCallback, useRef, type ChangeEvent, type ReactNode } from "react";
-import cn from "classnames";
+import { useCallback, useRef, type ChangeEvent, type ReactNode } from 'react';
+import cn from 'classnames';
 
-import styles from "./input.module.css";
-import { Spinner } from "../spinner";
+import styles from './input.module.css';
+import { Spinner } from '../spinner';
 
 interface InputProps {
+  isError?: boolean;
+  isLoading?: boolean;
   leftAdornment?: ReactNode;
   onChange(value: string): void;
-  rightAdornment?: ReactNode;
   placeholder?: string;
-  isLoading?: boolean;
+  rightAdornment?: ReactNode;
   value: string;
 }
 
 export const Input = ({
-  value,
-  placeholder,
-  leftAdornment,
-  rightAdornment,
+  isError,
   isLoading,
+  leftAdornment,
   onChange,
+  placeholder,
+  rightAdornment,
+  value,
 }: InputProps) => {
   const ref = useRef<HTMLInputElement>(null);
 
@@ -35,7 +37,13 @@ export const Input = ({
   );
 
   return (
-    <div className={cn(styles.inputContainer, { [styles.active]: !!value })} onClick={handleClick}>
+    <div
+      className={cn(
+        styles.inputContainer,
+        { [styles.active]: !!value },
+        { [styles.error]: isError },
+      )}
+      onClick={handleClick}>
       {leftAdornment}
       <input
         ref={ref}

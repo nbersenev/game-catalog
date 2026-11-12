@@ -1,12 +1,15 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
-import { QueryClient, QueryClientProvider as ReactQueryProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider as ReactQueryProvider,
+} from '@tanstack/react-query';
 
 interface QueryClientProviderProps {
   children: ReactNode;
 }
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: false,

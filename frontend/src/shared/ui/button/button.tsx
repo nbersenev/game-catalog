@@ -1,9 +1,9 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
-import cn from "classnames";
+import cn from 'classnames';
 
-import styles from "./button.module.css";
-import { Spinner } from "../spinner";
+import styles from './button.module.css';
+import { Spinner } from '../spinner';
 
 interface ButtonProps {
   leftAdornment?: ReactNode;
@@ -11,7 +11,7 @@ interface ButtonProps {
   rightAdornment?: ReactNode;
   text: string;
   isLoading?: boolean;
-  size?: "large" | "medium";
+  size?: 'large' | 'medium';
 }
 
 export const Button = ({
@@ -19,19 +19,18 @@ export const Button = ({
   leftAdornment,
   rightAdornment,
   onClick,
-  size = "large",
+  size = 'large',
   isLoading,
 }: ButtonProps) => (
   <button
     className={cn(
       styles.button,
-      { [styles.large]: size === "large" },
-      { [styles.medium]: size === "medium" },
-      { "pointer-events-none": isLoading },
+      { [styles.large]: size === 'large' },
+      { [styles.medium]: size === 'medium' },
+      { 'pointer-events-none': isLoading },
     )}
     type="button"
-    onClick={onClick}
-  >
+    onClick={onClick}>
     <div className="flex items-center gap-2">
       {leftAdornment}
       {text}
