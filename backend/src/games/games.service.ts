@@ -106,7 +106,7 @@ export class GamesService {
         }
       : undefined;
     const [items, count] = await this.prisma.$transaction([
-      this.prisma.game.findMany({ where }),
+      this.prisma.game.findMany({ where, orderBy: { name: 'asc' } }),
       this.prisma.game.count({ where }),
     ]);
     return { items, count };

@@ -41,7 +41,7 @@ export const MainPage = () => {
       />
       <div className="pt-28 px-8 pb-8 min-h-screen flex flex-col">
         {games.length ? (
-          <div className="grid grid-cols-8 gap-8">
+          <div className="grid grid-cols-10 gap-8">
             {games.map(game => (
               <GameCard key={game.id} data={game} />
             ))}
@@ -50,9 +50,6 @@ export const MainPage = () => {
           <EmptyState />
         )}
       </div>
-      {/* <Modal open={true} width="400px" onClose={() => void 0}>
-        <div className="h-50">asdas</div>
-      </Modal> */}
     </>
   );
 };

@@ -1,15 +1,15 @@
-import { memo, useCallback, useRef, useState, type MouseEvent } from "react";
-import type { Game } from "../model";
-import styles from "./game-card.module.css";
-import { WindowsIcon } from "@shared/ui";
+import { memo, useCallback, useRef, useState, type MouseEvent } from 'react';
+import type { Game } from '../model';
+import styles from './game-card.module.css';
+import { SteamIcon, WindowsIcon } from '@shared/ui';
 
 interface GameCardProps {
   data: Game;
 }
 
 export const GameCard = memo(({ data }: GameCardProps) => {
-  const { image } = data;
-  const imageUrl = "http://localhost:9000/default" + image;
+  const { image, steam_app_id } = data;
+  const imageUrl = 'http://localhost:9000/default' + image;
   const ref = useRef<HTMLDivElement>(null);
   const [isHover, setIsHover] = useState(false);
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
@@ -36,11 +36,10 @@ export const GameCard = memo(({ data }: GameCardProps) => {
   return (
     <div
       style={{
-        perspective: "500px",
-        transformStyle: "preserve-3d",
-        isolation: "isolate",
-      }}
-    >
+        perspective: '500px',
+        transformStyle: 'preserve-3d',
+        isolation: 'isolate',
+      }}>
       <div
         ref={ref}
         className={styles.gameCard}
@@ -50,20 +49,15 @@ export const GameCard = memo(({ data }: GameCardProps) => {
         style={{
           transform: isHover
             ? `scale(1.05) translateZ(0) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`
-            : "translateZ(0)",
-          transition: isHover ? "none" : "transform 0.4s ease",
-        }}
-      >
+            : 'translateZ(0)',
+          transition: isHover ? 'none' : 'transform 0.4s ease',
+        }}>
         <div className={styles.gameCard__body}>
-          <div className="flex p-2">
+          <div className="flex items-center gap-2 p-2">
             <WindowsIcon height="24px" width="24px" />
+            {!!steam_app_id && <SteamIcon height="18px" width="18px" />}
           </div>
-          <img
-            src={imageUrl}
-            alt=""
-            draggable={false}
-            className="w-full select-none"
-          />
+          <img src={imageUrl} alt="" draggable={false} className="w-full select-none" />
         </div>
       </div>
     </div>
